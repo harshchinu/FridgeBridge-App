@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Item Avaliable"));
-        tabLayout.addTab(tabLayout.newTab().setText("To Buy"));
+        tabLayout.addTab(tabLayout.newTab().setText("Fridge View"));
+        tabLayout.addTab(tabLayout.newTab().setText("Recipes you can try"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PageAdapter

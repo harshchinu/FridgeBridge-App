@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.fridge_bridge.TabFragments.ItemFragment;
+import com.example.fridge_bridge.TabFragments.Recipestotry;
 import com.example.fridge_bridge.TabFragments.ToBuy;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
@@ -23,6 +24,9 @@ public class PageAdapter extends FragmentStatePagerAdapter {
             case 1:
                 ToBuy tab2 = new ToBuy();
                 return tab2;
+            case 2:
+                Recipestotry recipestotry = new Recipestotry();
+                return  recipestotry;
             default:
                 return null;
         }
