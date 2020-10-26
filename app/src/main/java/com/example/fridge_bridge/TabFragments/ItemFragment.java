@@ -57,7 +57,7 @@ public class ItemFragment extends Fragment {
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
 
         progressBar=root.findViewById(R.id.progressBar);
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mLayoutManager.setItemPrefetchEnabled(true);
         recyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerViewAdapter(movieList,getContext(),1);
@@ -71,7 +71,7 @@ public class ItemFragment extends Fragment {
     private void prepareData() {
         progressBar.setVisibility(View.VISIBLE);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Users");
+        DatabaseReference myRef = database.getReference("Users").child("random");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

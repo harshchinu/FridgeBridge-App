@@ -64,7 +64,7 @@ public class ToBuy extends Fragment {
 
     private void prepareData() {
         progressBar.setVisibility(View.VISIBLE);
-            StorageReference load = FirebaseStorage.getInstance().getReference().child("lastimage.jpg");
+            StorageReference load = FirebaseStorage.getInstance().getReference().child("random").child("lastimage.jpg");
             System.out.println(load.toString());
             load.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
