@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
+
 
 public class ItemFragment extends Fragment {
     private List<DataModel> movieList = new ArrayList<>();
@@ -55,12 +57,12 @@ public class ItemFragment extends Fragment {
 
     private void initView() {
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-
+        Paper.init(getContext());
         progressBar=root.findViewById(R.id.progressBar);
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         mLayoutManager.setItemPrefetchEnabled(true);
         recyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter(movieList,getContext(),1);
+        mAdapter = new RecyclerViewAdapter(movieList,null,getContext(),1);
         recyclerView.setAdapter(mAdapter);
 
 
@@ -75,12 +77,15 @@ public class ItemFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                movieList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     movieList.add(new DataModel(ds.getKey()));
 
-                }
 
+                }
+                Paper.book("food").write("foodlist",movieList);
                 temp();
+
                 mAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }

@@ -54,7 +54,7 @@ public class ToBuy extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
         recyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter(movieList,getContext(),2);
+        mAdapter = new RecyclerViewAdapter(movieList,null,getContext(),2);
         recyclerView.setAdapter(mAdapter);
 
 
