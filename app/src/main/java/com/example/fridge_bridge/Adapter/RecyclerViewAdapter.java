@@ -1,6 +1,7 @@
 package com.example.fridge_bridge.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.example.fridge_bridge.Model.DataModel;
+import com.example.fridge_bridge.Model.RecipeDetail;
 import com.example.fridge_bridge.Model.RecipeModel;
+import com.example.fridge_bridge.NetworkCalls.APIClient;
+import com.example.fridge_bridge.NetworkCalls.JsonApiCalls;
 import com.example.fridge_bridge.R;
+import com.example.fridge_bridge.WebView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
     private List<DataModel> itemList;
@@ -85,6 +94,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }else if(type==3){
             holder.textView.setText(recipeModelList.get(position).title);
             Picasso.get().load(recipeModelList.get(position).image).placeholder(circularProgressDrawable).into(holder.imageView);
+            holder.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(recipeModelList.get(position).id!=-1){
+                        JsonApiCalls jsonApiCalls = APIClient.getClient().create(JsonApiCalls.class);
+                        Call<RecipeDetail> call = jsonApiCalls.getRecipeDetail(recipeModelList.get(position).id,"d226126a736f419a8fdb64eb8491f034");
+                        call.enqueue(new Callback<RecipeDetail>() {
+                            @Override
+                            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
+                                if(response.isSuccessful()){
+                                    Intent intent = new Intent(context, WebView.class);
+                                    intent.putExtra("url", response.body().getSourceUrl());
+                                    context.startActivity(intent);
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<RecipeDetail> call, Throwable t) {
+
+                            }
+                        });
+
+
+
+
+                    }
+                }
+            });
         }
     }
 
